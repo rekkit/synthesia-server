@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CryptoRequest {
+  // The ID of the request.
+  id                       String                   @id @default(uuid()) @db.Uuid
+
+  // The time when the request first came in.
+  createdAt                DateTime
+
+  // The last time we attempted to proxy this request.
+  lastAttempt              DateTime
+
+  // The number of times we've attempted to proxy this request.
+  numberOfAttempts         Int
+
+  // The state of the request. Can be Pending or Completed.
+  state                    CRYPTO_REQUEST_STATE     @default(Pending)
+
+  // The type of the request. It can either be an encrypt request or a verify request.
+  type                     CRYPTO_REQUEST_TYPE
+
+  // The initialization vector for the encrypted message.
+  initVector               String?                  @db.VarChar()
+  
+  // The encrypted message. Since users are requesting that we encrypt a message, it would be irresponsible to store it in plaintext.
+  // This way if the API doesn't respond immediately to us, we can store the message safely while we wait for it to start working again
+  // or while we wait for our request limit to renew.
+  encryptedMessageInternal String?                  @db.VarChar()
+
+  // The encrypted message that we received from the external API.
+  // This is different from encryptedMessage, which is how we store the message in case our DB is compromised.
+  encryptedMessageExternal String?                  @db.VarChar()
+
+  // The verify result of the request. This value is not null only when the request type if 'Verify'.
+  verificationResult       Boolean?                 @db.Boolean()
+}
+
+enum CRYPTO_REQUEST_TYPE {
+  Encrypt
+  Verify
+}
+
+enum CRYPTO_REQUEST_STATE {
+  Pending
+  Completed
+}
