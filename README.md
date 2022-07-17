@@ -5,7 +5,7 @@ Proxy server for the unreliable crypto API.
 Below are the instructions on how to set up the server and how to use the three endpoints that this API has.
 
 ## Setup
-To set up the server, extract the `docker-compose.yml` and `.env files that you received from me into a directory. Then run `docker compose up -d`.
+To set up the server, extract the `docker-compose.yml` and `.env` files that you received from me into a directory. Then run `docker compose up -d`.
 
 The server listens on port `3000` while PostgreSQL is available on port `5433` on the host. Make sure these ports aren't being used by other processes. The password for the database will also be sent to you. If you want to see what's going on under the hood, connect to the postgres instance using the password on port `5433`.
 
