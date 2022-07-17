@@ -5,4 +5,4 @@ const externalEncryptionService = Singleton.getInstance();
 
 setInterval(() => { externalEncryptionService.processBacklog() }, 1000);
 
-app.listen(3000);
+app.listen(3000, "0.0.0.0");

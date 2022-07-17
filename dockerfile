@@ -1,26 +1,23 @@
 FROM node:16
 
-# Create app directory and set it as the default directory
+# Create app directory
 WORKDIR /app
 
-# Copy package.json and prisma
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
 COPY package*.json ./
+
+# Copy prisma and TS types
 COPY prisma ./prisma/
+COPY @types ./@types/
 
-# COPY tsconfig.json file
-COPY tsconfig.json ./
-
-# COPY
-COPY . .
-
-# Install libraries
+# Install necessary libraries
 RUN npm install
 
-# Compile TS to JS
-RUN npx tsc
+# Bundle app source
+COPY . .
 
-# Run and expose the server on port 3000
 EXPOSE 3000
 
-# A command to start the server
-CMD npm start
+CMD npm run start:migrate:prod && npx ts-node ./src/server.ts

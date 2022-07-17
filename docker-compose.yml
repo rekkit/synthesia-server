@@ -11,8 +11,11 @@ services:
     depends_on:
       - postgres
     ports:
-      - "3000:3000"
-    restart: always
+      - 3000:3000
+      - 9229:9229
+    env_file:
+      - .env
+    # restart: always
 
   postgres:
     image: postgres:latest
