@@ -3,7 +3,6 @@ import express, { Express } from 'express';
 import { requestId } from './middleware/utilMiddleware';
 import { errorHandler } from './middleware/errorMiddleware';
 import { encryptionController } from './controllers/encryptionController';
-import { encryptionRequestsController } from './controllers/encryptionRequestsController';
 
 const app: Express = express();
 
@@ -16,7 +15,6 @@ app.use(requestId);
 
 // Routes
 app.use('/crypto', encryptionController);
-app.use('/encryptionRequests', encryptionRequestsController);
 
 // Error handler
 app.use(errorHandler);
