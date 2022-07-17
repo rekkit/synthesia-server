@@ -28,6 +28,7 @@ function handleExternalEncryptionResponse(req: Request, res: Response, next: Nex
             numberOfAttempts: 0,
             initVector: pair.initVector,
             type: CRYPTO_REQUEST_TYPE.Encrypt,
+            encryptedMessageExternal: req.encryptedMessage,
             encryptedMessageInternal: pair.encryptedMessage,
             state: encryptionSucceeded ? CRYPTO_REQUEST_STATE.Completed : CRYPTO_REQUEST_STATE.Pending
         }
@@ -52,7 +53,8 @@ function handleExternalEncryptionResponse(req: Request, res: Response, next: Nex
             ));
         })
         .catch(() => {
-            res.send(HTTP_CODE.INTERNAL_SERVER_ERROR);
+            res.status(HTTP_CODE.INTERNAL_SERVER_ERROR);
+            res.send();
         })
 }
 
@@ -77,6 +79,7 @@ function handleExternalVerifyResponse(req: Request, res: Response, next: NextFun
             numberOfAttempts: 0,
             type: CRYPTO_REQUEST_TYPE.Verify,
             encryptedMessageExternal: signature,
+            verificationResult: req.verificationResult,
             initVector: verificationSucceeded ? '' : pair.initVector,
             encryptedMessageInternal: verificationSucceeded ? '' : pair.encryptedMessage,
             state: verificationSucceeded ? CRYPTO_REQUEST_STATE.Completed : CRYPTO_REQUEST_STATE.Pending
