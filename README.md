@@ -5,8 +5,10 @@ Proxy server for the unreliable crypto API.
 Below are the instructions on how to use the three endpoints that this API has.
 
 ### Sign
-You can request that the server sign a message using the call:
-`http://localhost:3000/crypto/sign?message={message}`
+You can request that the server sign a message using the call: 
+
+    `http://localhost:3000/crypto/sign?message={message}`
+
 
 The response will have the form:
 ```
@@ -27,8 +29,9 @@ The response will have the form:
 If the request is `Pending`, you can poll for its status using the third API call (see below).
 
 ### Verify
-You can request that the server verify a message given a signature, using the call:
-`http://localhost:3000/crypto/verify?message={message}&signature={signature}`
+You can request that the server verify a message given a signature, using the call: 
+
+    `http://localhost:3000/crypto/verify?message={message}&signature={signature}`
 
 The response will have the form:
 ```
