@@ -25,7 +25,7 @@ The fields of interest are `state` and `type`, both of which are explained in de
 ### Sign
 You can request that the server sign a message using the call: 
 
-    `http://localhost:3000/crypto/sign?message={message}`
+    GET http://localhost:3000/crypto/sign?message={message}
 
 
 The response will have the form:
@@ -49,7 +49,7 @@ If the request is `Pending`, you can poll for its status using the third API cal
 ### Verify
 You can request that the server verify a message given a signature, using the call: 
 
-    `http://localhost:3000/crypto/verify?message={message}&signature={signature}`
+    GET http://localhost:3000/crypto/verify?message={message}&signature={signature}
 
 The response will have the form:
 ```
@@ -71,9 +71,10 @@ Although the external API doesn't fail for the verify endpoint, we are still sub
 
 ### Poll requests
 This endpoint allows you to check the status of a sign or verify operation and is called as shown below:
-`http://localhost:3000/crypto/requests?requestId=<REQUEST_ID>`
+   
+    GET http://localhost:3000/crypto/requests?requestId={requestId}
 
-You get the `<REQUEST_ID>` from the server when you call the sign or verify endpoints. The response from this endpoint is the following:
+You get the `requestId` from the server when you call the sign or verify endpoints. The response from this endpoint is the following:
 ```
 {
     "requestId": "fa292e12-5acb-486f-8d90-fe003eef84fe",
