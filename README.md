@@ -1,9 +1,27 @@
 # synthesia-server
 Proxy server for the unreliable crypto API.
 
-## Instructions
-Below are the instructions on how to use the three endpoints that this API has.
+# Instructions
+Below are the instructions on how to set up the server and how to use the three endpoints that this API has.
 
+## Setup
+To set up the server, simply run the `docker-compose.yml` file that you received from me. Make sure that the `.env` file is in the same directory as the Docker compose file.
+
+The server listens on port `3000` while PostgreSQL is available on port `5433` on the host. Make sure these ports aren't being used by other processes. The password for the database will also be sent to you. If you want to see what's going on under the hood, connect to the postgres instance using the password on port `5433`.
+
+There is a single table and you can query it using the below query:
+```
+select 
+    * 
+from 
+    "CryptoRequest" cr 
+order by 
+    state, "lastAttempt" desc
+```
+
+The fields of interest are `state` and `type`, both of which are explained in detail in the next section.
+    
+## Endpoints
 ### Sign
 You can request that the server sign a message using the call: 
 
